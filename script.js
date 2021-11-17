@@ -2,6 +2,7 @@ let myDay = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
 ///const today = $('#currentDay');
 currentDay.prepend(myDay);
 let containerEl = $('.container');
+let timeBlockEl = $('.timeBlock')
 
 
 let mySched = [
@@ -68,59 +69,57 @@ let mySched = [
     {
         hour: 23,
         activity: ''
-    },
-    {
-        hour: 0,
-        activity: ''
-    },
-    {
-        hour: 1,
-        activity: ''
-    },
-    {
-        hour: 2,
-        activity: ''
     }
 ]
 
 
 //let currHour = moment().format("h a");
-let currHour =  moment().format("HH");
+//let currHour =  (moment().format("hh:mma"));
+let currHour = (moment().get('hour'));
 function whenIsNow(hour) {
-    // console.log(currHour);
-    // console.log(hour)
+    myHour = (moment(parseInt(hour)));
+    //console.log(hour);
+    //console.log(myHour)
+    //console.log(myHour.isSame(currHour));
+    //myHour = myHour.toString();
+    // console.log('Current Hour type ' + typeof currHour);
+    // console.log('hour ' + typeof myHour);
     // console.log(hour == currHour);
-    if (hour == currHour) {
+    // console.log('myhour ' + hour);
+    // console.log('currHour ' + currHour);
+    // console.log(myHour.isAfter(currHour));
+    if (myHour.isSame(currHour)) {
         return 'present';
-    } else if (hour < currHour) {
+    } else if (myHour.isBefore(currHour)) {
         return 'past';
-    } else  if (hour > currHour) {
+    } else  if (myHour.isAfter(currHour)) {
         return 'future';
     }
-
 }
 
 function convertTime(myHour) {
     
     if (myHour > 0 && myHour <= 12) {
-        myHour = myHour + ' am';
+        myHour = myHour + 'am';
       } else if (myHour > 12) {
         (myHour = myHour - 12 + 'pm');
       } else if (myHour == 0) {
-        myHour = 12 + ' am';
+        myHour = 12 + 'am';
       }
       return myHour;
 }
 
 for (let i = 0; i < mySched.length; i++) {
     let myHour = mySched[i].hour;
-    let convertedHour = convertTime(myHour);
+    
+    //console.log(myHour);
+    //let convertedHour = convertTime(myHour);
     //console.log(convertedHour);
     let timeBlock = $(
         `<div class="row">
-            <div id="${i}" class="col-12 col-md-2 hour">${convertedHour}</div>
-            <div id="description" class="col-12 col-md-8 description ${whenIsNow(myHour)}"><textarea name="description">test</textarea></div>
-            <div class="col-12 col-md-2 button"></div>
+            <div id="${i}" class="col-12 col-md-1 hour">${convertTime(moment(myHour, 'h:hh ').get('hour'))}</div>
+            <div id="description" class="col-12 col-md-9 p-0 description ${whenIsNow(myHour)}"><textarea id=${i}" name="description">test</textarea></div>
+            <div class="col-12 col-md-2 pl-0"><button class="btn btn-lg saveBtn"><i class="far fa-save"></i></button></div>
         </div>`
     )
     let schedTime = $(`#${i}`);
@@ -128,3 +127,13 @@ for (let i = 0; i < mySched.length; i++) {
     containerEl.append(timeBlock);
 }
 
+const saveBtn = $(containerEl);
+saveBtn.on('click', '.saveBtn', function(event) {
+    let toSave = $(event.target);
+    let myTextArea = toSave.parent().parent().children().eq(1).children().eq(0).val();
+    let myIndex = toSave.parent().parent().children().eq(0).attr('id');
+    console.log(myIndex);
+    //myTextArea.text(myTextArea);
+    console.log(myTextArea);
+
+})
