@@ -1,94 +1,23 @@
+// get the current day
 let myDay = moment().format("dddd, MMMM Do YYYY");
-let day = myDay;
-///const today = $('#currentDay');
-currentDay.prepend(myDay);
+// target current day div
+let currentDayEl = $('#currentDay');
+// Append the date to current day div
+currentDayEl.append(myDay);
+// target the container
 let containerEl = $('.container');
-let timeBlockEl = $('.timeBlock')
-let myEvents = [];
-let eventText = '';
-
-let mySched = [
-    {
-        hour:  8,
-        activity: 'Pain in the ass'
-    },
-    {
-        hour: 9,
-        activity: ''
-    },
-    {
-        hour: 10,
-        activity: ''
-    },
-    {
-        hour: 11,
-        activity: ''
-    },
-    {
-        hour: 12,
-        activity: ''
-    },
-    {
-        hour: 13,
-        activity: ''
-    },
-    {
-        hour: 14,
-        activity: ''
-    },
-    {
-        hour: 15,
-        activity: ''
-    },
-    {
-        hour: 16,
-        activity: ''
-    },
-    {
-        hour: 17,
-        activity: ''
-    },
-    {
-        hour: 18,
-        activity: ''
-    },
-    {
-        hour: 19,
-        activity: ''
-    },
-    {
-        hour: 20,
-        activity: ''
-    },
-    {
-        hour: 21,
-        activity: ''
-    },
-    {
-        hour: 22,
-        activity: ''
-    },
-    {
-        hour: 23,
-        activity: ''
-    }
-]
-
-//let currHour = moment().format("h a");
-//let currHour =  (moment().format("hh:mma"));
+// get the current hour
 let currHour = (moment().get('hour'));
+
+// function to check if the the 
+//current hour is before, after, or the same as 
+// each hour of the planner and setting the 
+// past, present, or future class to the event
 function whenIsNow(hour) {
+    // this is the hour passed to the function
     myHour = (moment(parseInt(hour)));
-    //console.log(hour);
-    //console.log(myHour)
-    //console.log(myHour.isSame(currHour));
-    //myHour = myHour.toString();
-    // console.log('Current Hour type ' + typeof currHour);
-    // console.log('hour ' + typeof myHour);
-    // console.log(hour == currHour);
-    // console.log('myhour ' + hour);
-    // console.log('currHour ' + currHour);
-    // console.log(myHour.isAfter(currHour));
+    // compare the hour passed in to the current hour
+    // and set the class acordingly
     if (myHour.isSame(currHour)) {
         return 'present';
     } else if (myHour.isBefore(currHour)) {
@@ -98,8 +27,9 @@ function whenIsNow(hour) {
     }
 }
 
+// function to convert hour displayed to 12 hour time 
+// and add am or pm.
 function convertTime(myHour) {
-    
     if (myHour > 0 && myHour <= 12) {
         myHour = myHour + 'am';
       } else if (myHour > 12) {
@@ -110,17 +40,15 @@ function convertTime(myHour) {
       return myHour;
 }
 
+// count from 9-18 and create each time block
 for (let i = 9; i < 18; i++) {
-    //let myHour = mySched[i].hour;
-    
-    //console.log(myHour);
-    //let convertedHour = convertTime(myHour);
-    //console.log(convertedHour);
+    // get event[i] from local storage
     let currentEvent = localStorage.getItem(i);
-    //console.log(myPlanner);
+    // if the current event is null set currentEvent to ''
     if (currentEvent == null) {
         currentEvent = ''
     }
+    // create the timeBlocks
     let timeBlock = $(
         `<div class="row">
             <div id="${i}" class="col-1 d-flex justify-content-center hour">${convertTime(i)}</div>
@@ -128,19 +56,18 @@ for (let i = 9; i < 18; i++) {
             <div class="col-2 pl-0"><button class="btn btn-lg saveBtn"><i class="far fa-save"></i></button></div>
         </div>`
     )
-    let schedTime = $(`#${i}`);
-    schedTime.append(myHour);
+    // append time blocks to container element
     containerEl.append(timeBlock);
 }
 
+// target save buttons in containerEL
 const saveBtn = $(containerEl);
+// create onclick event for save button
 saveBtn.on('click', '.saveBtn', function(event) {
-    // get event id
-    
+    // get event id or index
     let eventId = $(this).parent().parent().children().eq(0).attr('id');
+    // get the text entered for the time block 
     let eventText = $(this).parent().parent().children().eq(1).children().val();
-    if (eventText) {
-        
-    }
+    // save event to local storage
     localStorage.setItem(eventId, eventText);
 })
