@@ -1,14 +1,16 @@
-let myDay = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
+let myDay = moment().format("dddd, MMMM Do YYYY");
+let day = myDay;
 ///const today = $('#currentDay');
 currentDay.prepend(myDay);
 let containerEl = $('.container');
 let timeBlockEl = $('.timeBlock')
-
+let myEvents = [];
+let eventText = '';
 
 let mySched = [
     {
         hour:  8,
-        activity: ''
+        activity: 'Pain in the ass'
     },
     {
         hour: 9,
@@ -72,7 +74,6 @@ let mySched = [
     }
 ]
 
-
 //let currHour = moment().format("h a");
 //let currHour =  (moment().format("hh:mma"));
 let currHour = (moment().get('hour'));
@@ -109,17 +110,22 @@ function convertTime(myHour) {
       return myHour;
 }
 
-for (let i = 0; i < mySched.length; i++) {
-    let myHour = mySched[i].hour;
+for (let i = 9; i < 18; i++) {
+    //let myHour = mySched[i].hour;
     
     //console.log(myHour);
     //let convertedHour = convertTime(myHour);
     //console.log(convertedHour);
+    let currentEvent = localStorage.getItem(i);
+    //console.log(myPlanner);
+    if (currentEvent == null) {
+        currentEvent = ''
+    }
     let timeBlock = $(
         `<div class="row">
-            <div id="${i}" class="col-12 col-md-1 hour">${convertTime(moment(myHour, 'h:hh ').get('hour'))}</div>
-            <div id="description" class="col-12 col-md-9 p-0 description ${whenIsNow(myHour)}"><textarea id=${i}" name="description">test</textarea></div>
-            <div class="col-12 col-md-2 pl-0"><button class="btn btn-lg saveBtn"><i class="far fa-save"></i></button></div>
+            <div id="${i}" class="col-1 d-flex justify-content-center hour">${convertTime(i)}</div>
+            <div id="description" class="col-9 description ${whenIsNow(i)}"><textarea class="myText">${currentEvent}</textarea></div>
+            <div class="col-2 pl-0"><button class="btn btn-lg saveBtn"><i class="far fa-save"></i></button></div>
         </div>`
     )
     let schedTime = $(`#${i}`);
@@ -129,11 +135,12 @@ for (let i = 0; i < mySched.length; i++) {
 
 const saveBtn = $(containerEl);
 saveBtn.on('click', '.saveBtn', function(event) {
-    let toSave = $(event.target);
-    let myTextArea = toSave.parent().parent().children().eq(1).children().eq(0).val();
-    let myIndex = toSave.parent().parent().children().eq(0).attr('id');
-    console.log(myIndex);
-    //myTextArea.text(myTextArea);
-    console.log(myTextArea);
-
+    // get event id
+    
+    let eventId = $(this).parent().parent().children().eq(0).attr('id');
+    let eventText = $(this).parent().parent().children().eq(1).children().val();
+    if (eventText) {
+        
+    }
+    localStorage.setItem(eventId, eventText);
 })
