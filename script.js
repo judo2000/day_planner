@@ -15,7 +15,7 @@ let currHour = (moment().get('hour'));
 // past, present, or future class to the event
 function whenIsNow(hour) {
     // this is the hour passed to the function
-    myHour = (moment(parseInt(hour)));
+    let myHour = (moment(parseInt(hour)));
     // compare the hour passed in to the current hour
     // and set the class acordingly
     if (myHour.isSame(currHour)) {
