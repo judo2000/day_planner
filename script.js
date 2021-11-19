@@ -46,7 +46,7 @@ for (let i = 9; i < 18; i++) {
     let currentEvent = localStorage.getItem(i);
     // if the current event is null set currentEvent to ''
     if (currentEvent == null) {
-        currentEvent = ''
+        currentEvent = '';
     }
     // create the timeBlocks
     let timeBlock = $(
@@ -55,7 +55,7 @@ for (let i = 9; i < 18; i++) {
             <div id="description" class="col-9 description ${whenIsNow(i)}"><textarea class="myText">${currentEvent}</textarea></div>
             <div class="col-2 pl-0"><button class="btn btn-lg saveBtn"><i class="far fa-save"></i></button></div>
         </div>`
-    )
+    );
     // append time blocks to container element
     containerEl.append(timeBlock);
 }
@@ -70,4 +70,4 @@ saveBtn.on('click', '.saveBtn', function(event) {
     let eventText = $(this).parent().parent().children().eq(1).children().val();
     // save event to local storage
     localStorage.setItem(eventId, eventText);
-})
+});
