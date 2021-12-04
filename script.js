@@ -6,6 +6,8 @@ let currentDayEl = $('#currentDay');
 currentDayEl.append(myDay);
 // target the container
 let containerEl = $('.container');
+let mySched = [];
+
 // get the current hour
 let currHour = (moment().get('hour'));
 
@@ -48,6 +50,7 @@ for (let i = 9; i < 18; i++) {
     if (currentEvent == null) {
         currentEvent = '';
     }
+    
     // create the timeBlocks
     let timeBlock = $(
         `<div class="row">
@@ -66,8 +69,10 @@ const saveBtn = $(containerEl);
 saveBtn.on('click', '.saveBtn', function(event) {
     // get event id or index
     let eventId = $(this).parent().parent().children().eq(0).attr('id');
-    // get the text entered for the time block 
+    console.log("time: " + eventId);
+    // get the text entered for the time block
     let eventText = $(this).parent().parent().children().eq(1).children().val();
+    console.log("text: " + eventText);
     // save event to local storage
     localStorage.setItem(eventId, eventText);
 });
