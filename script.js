@@ -45,7 +45,7 @@ function convertTime(myHour) {
 // count from 9-18 and create each time block
 for (let i = 9; i < 18; i++) {
     // get event[i] from local storage
-    let currentEvent = window.localStorage.getItem(i);
+    let currentEvent = localStorage.getItem(i);
     // if the current event is null set currentEvent to ''
     if (currentEvent == null) {
         currentEvent = '';
@@ -69,10 +69,8 @@ const saveBtn = $(containerEl);
 saveBtn.on('click', '.saveBtn', function(event) {
     // get event id or index
     let eventId = $(this).parent().parent().children().eq(0).attr('id');
-    console.log("time: " + eventId);
     // get the text entered for the time block
     let eventText = $(this).parent().parent().children().eq(1).children().val();
-    console.log("text: " + eventText);
     // save event to local storage
-    window.localStorage.setItem(eventId, eventText);
+    localStorage.setItem(eventId, eventText);
 });
