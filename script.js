@@ -19,7 +19,7 @@ function whenIsNow(hour) {
     // this is the hour passed to the function
     let myHour = (moment(parseInt(hour)));
     // compare the hour passed in to the current hour
-    // and set the class acordingly
+    // and set the class accordingly
     if (myHour.isSame(currHour)) {
         return 'present';
     } else if (myHour.isBefore(currHour)) {
