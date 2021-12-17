@@ -4,8 +4,8 @@ let myDay = moment().format("dddd, MMMM Do YYYY");
 let currentDayEl = $('#currentDay');
 // Append the date to current day div
 currentDayEl.append(myDay);
-// target the container
-let containerEl = $('.container');
+// target the time blocks div
+let timeBlocksEl = $('#timeBlocks');
 let mySched = [];
 
 // get the current hour
@@ -59,12 +59,12 @@ for (let i = 9; i < 18; i++) {
             <div class="col-2 pl-0"><button class="btn btn-lg saveBtn"><i class="far fa-save"></i></button></div>
         </div>`
     );
-    // append time blocks to container element
-    containerEl.append(timeBlock);
+    // append time blocks to timeBlocksEl element
+    timeBlocksEl.append(timeBlock);
 }
 
-// target save buttons in containerEL
-const saveBtn = $(containerEl);
+// target save buttons in timeBlocksEl
+const saveBtn = $(timeBlocksEl);
 // create onclick event for save button
 saveBtn.on('click', '.saveBtn', function(event) {
     // get event id or index
